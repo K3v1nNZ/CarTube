@@ -16,6 +16,17 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
+      - name: Caching brew dependencies
+        id: brew_cache
+        uses: tecolicom/actions-use-homebrew-tools@v1.2
+        with:
+          tools: ldid
+          cache: yes
+
+      - name: Install Dependencies
+        if: steps.brew_cache.outputs.cache-hit != 'true'
+        run: brew install ldid
       
       - name: Run build script
         run: |
