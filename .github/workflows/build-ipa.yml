@@ -1,0 +1,29 @@
+name: Build CarTube into an IPA file
+
+on: workflow_dispatch
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Run build script
+    runs-on: macos-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Run build script
+        run: |
+          ./ipabuild.sh
+      
+      - name: Upload IPA
+        uses: actions/upload-artifact@v2
+        with:
+          name: CarTube
+          path: CarTube.ipa
+          if-no-files-found: error
