@@ -36,5 +36,5 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: CarTube
-          path: CarTube.ipa
+          path: build/CarTube.ipa
           if-no-files-found: error
